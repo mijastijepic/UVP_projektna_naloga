@@ -88,7 +88,7 @@ def vrednost_za_bio_oznako(soup, oznaka):
     oznaka_div = soup.find(
         "div",
         class_="vbw-player-bio-head",
-        string=preveri_element, # najde element kjer funkcija prever_element vrne true
+        string=preveri_element, # najde element kjer funkcija preveri_element vrne true
     )
 
     if oznaka_div is None:
