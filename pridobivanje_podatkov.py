@@ -118,3 +118,58 @@ def pridobi_bio_igralca(soup):
         "datum_rojstva": vrednost_za_bio_oznako(soup, "Birth date"),
         "visina_cm": vrednost_za_bio_oznako(soup, "Height"),
     }
+
+
+
+# -------------------------------------------------------------------
+# funkcija, ki pridobi igralčevo statistiko
+# -------------------------------------------------------------------
+
+IMENA_STATISTIK = [
+    "tocke_skupaj",           # Total Points
+    "tocke_povprecje",        # Average by Match
+    "tocke_napad",            # Attack Points
+    "ucinkovitost_napad",     # Efficiency (%)
+    "napad_povprecje",        # Avg Points (pri napadu)
+    "tocke_blok",             # Block Points
+    "uspesnost_blok",         # Success (%)
+    "blok_povprecje",         # Avg Points (pri bloku)
+    "tocke_servis",           # Serve Points
+    "uspesnost_servis",       # Success (%)
+    "servis_povprecje",       # Avg Points (pri servisu)
+]
+
+# Pri povprecjih (Avg Points) je mišljeno povprečno število točk na tekmo.
+
+
+def preveri_zacetek_statistike(besedilo):
+    return ujemanje_oznake(besedilo, "Player Competition Statistics")
+ 
+ 
+def pridobi_statistiko_igralca(soup):
+    
+    # Iz strani igralca prebere statistiko iz razdelka "Player Competition Statistics".
+
+    zacetna_oznaka = soup.find(string=preveri_zacetek_statistike)
+    if zacetna_oznaka is None:
+        return {ime: None for ime in IMENA_STATISTIK}
+ 
+    stevilo_potrebnih_nizov = len(IMENA_STATISTIK) * 2
+    nizi = []
+    trenutni_element = zacetna_oznaka
+ 
+    while len(nizi) < stevilo_potrebnih_nizov:
+        trenutni_element = trenutni_element.find_next(string=True)
+        if trenutni_element is None:
+            break
+        besedilo = trenutni_element.strip()
+        if besedilo:  # preskočimo prazne nize (presledki, prelomi vrstic), ki so v pythonu obravnavani kot False
+            nizi.append(besedilo)
+ 
+    vrednosti = nizi[1::2]
+ 
+    statistika = {}
+    for ime_polja, vrednost in zip(IMENA_STATISTIK, vrednosti):
+        statistika[ime_polja] = vrednost
+ 
+    return statistika
