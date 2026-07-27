@@ -13,3 +13,9 @@ __pycache__/
 # ---- Operacijski sistem ----
 .DS_Store
 Thumbs.db
+
+# ---- Virtualna okolja ----
+venv/
+.venv/
+env/
+ENV/
