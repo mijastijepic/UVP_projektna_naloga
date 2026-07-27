@@ -34,7 +34,7 @@ def pridobi_soup(url):
 def pridobi_seznam_igralcev(spol, id_ekipe):
 
     url = KONST.URL_IGRALCI_EKIPE.format(spol=spol, id_ekipe=id_ekipe)
-    
+
     soup = pridobi_soup(url)
     if soup is None:
         return []
@@ -64,3 +64,57 @@ def pridobi_seznam_igralcev(spol, id_ekipe):
         
  
     return igralci
+
+
+
+
+# -------------------------------------------------------------------
+# funkcija, ki zbere osebne podatke igralca
+# -------------------------------------------------------------------
+
+def ujemanje_oznake(besedilo, iskana_oznaka):
+
+    if besedilo is None:
+        return False
+    return besedilo.strip() == iskana_oznaka
+
+
+
+def vrednost_za_bio_oznako(soup, oznaka):
+
+    def preveri_element(besedilo):
+        return ujemanje_oznake(besedilo, oznaka)
+
+    oznaka_div = soup.find(
+        "div",
+        class_="vbw-player-bio-head",
+        string=preveri_element, # najde element kjer funkcija prever_element vrne true
+    )
+
+    if oznaka_div is None:
+        return None
+ 
+    stolpec = oznaka_div.find_parent("div", class_="vbw-player-bio-col")
+    if stolpec is None:
+        return None
+ 
+    vrednosti = stolpec.find_all("div", class_="vbw-player-bio-text")
+    if not vrednosti:
+        return None
+ 
+    for vrednost in vrednosti:
+        if "--desktop" in vrednost.get("class", []):
+            return vrednost.get_text(strip=True)
+
+    return vrednosti[0].get_text(strip=True)
+
+
+
+def pridobi_bio_igralca(soup):
+    return {
+        "pozicija": vrednost_za_bio_oznako(soup, "Position"),
+        "drzava": vrednost_za_bio_oznako(soup, "Nationality"),
+        "starost": vrednost_za_bio_oznako(soup, "Age"),
+        "datum_rojstva": vrednost_za_bio_oznako(soup, "Birth date"),
+        "visina_cm": vrednost_za_bio_oznako(soup, "Height"),
+    }
