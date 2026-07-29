@@ -58,7 +58,7 @@ def pridobi_seznam_igralcev(spol, id_ekipe):
         igralci.append({
             "id_igralca": ujemanje.group(1),
             "st_dresa": celice[0].get_text(strip=True),
-            "ime_na_seznamu": celica_imena.get_text(strip=True),
+            "priimek": celica_imena.get_text(strip=True),
             "pozicija_kratica": celice[2].get_text(strip=True),
         })
         
