@@ -49,7 +49,7 @@ def pridobi_seznam_igralcev(spol, id_ekipe):
         celica_imena = celice[1]
         povezava = celica_imena.find("a")
         if povezava is None or not povezava.get("href"):
-            continue  # npr. trener nima povezave na svojo stran, zato ga preskočimo
+            continue  # npr. trener - nima povezave na svojo stran, zato ga preskočimo
  
         ujemanje = re.search(r"(\d+)/?$", povezava["href"])
         if ujemanje is None:
@@ -176,7 +176,6 @@ def pridobi_statistiko_igralca(soup):
 
 
 
-
 # -------------------------------------------------------------------
 # funkcija, ki pridobi vse podatke enega igralca (bio + statistika skupaj)
 # -------------------------------------------------------------------
@@ -192,3 +191,36 @@ def pridobi_podatke_igralca(id_igralca):
     podatki.update(pridobi_bio_igralca(soup))
     podatki.update(pridobi_statistiko_igralca(soup))
     return podatki
+
+
+
+# -------------------------------------------------------------------
+# funkcija, ki vrne seznam slovarjev s podatki vseh igralcev enega spola (vse ekipe skupaj)
+# -------------------------------------------------------------------
+
+def pridobi_vse_igralce(spol):
+
+    ekipe = KONST.EKIPE_MOSKI if spol == "men" else KONST.EKIPE_ZENSKE
+
+    vsi_igralci = []
+ 
+    for id_ekipe, ime_drzave in ekipe.items():
+        print(f"Berem ekipo: {ime_drzave} ...")  #izbrisi!!
+        seznam_igralcev = pridobi_seznam_igralcev(spol, id_ekipe)
+ 
+        for osnovni_podatki in seznam_igralcev:
+            podrobni_podatki = pridobi_podatke_igralca(osnovni_podatki["id_igralca"])
+            if podrobni_podatki is None:
+                continue  # stran igralca se ni naložila, ga preskočimo
+ 
+            igralec = {
+                "drzava": ime_drzave,
+                "st_dresa": osnovni_podatki["st_dresa"],
+                "ime": osnovni_podatki["ime_na_seznamu"],
+            }
+            igralec.update(podrobni_podatki)
+            vsi_igralci.append(igralec)
+ 
+            time.sleep(0.5)
+ 
+    return vsi_igralci
