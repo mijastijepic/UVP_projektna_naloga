@@ -173,3 +173,22 @@ def pridobi_statistiko_igralca(soup):
         statistika[ime_polja] = vrednost
  
     return statistika
+
+
+
+
+# -------------------------------------------------------------------
+# funkcija, ki pridobi vse podatke enega igralca (bio + statistika skupaj)
+# -------------------------------------------------------------------
+
+def pridobi_podatke_igralca(id_igralca):
+
+    url = KONST.URL_IGRALEC.format(id_igralca=id_igralca)
+    soup = pridobi_soup(url)
+    if soup is None:
+        return None
+ 
+    podatki = {}
+    podatki.update(pridobi_bio_igralca(soup))
+    podatki.update(pridobi_statistiko_igralca(soup))
+    return podatki
