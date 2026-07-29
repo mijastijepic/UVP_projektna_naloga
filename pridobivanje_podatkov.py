@@ -113,7 +113,6 @@ def vrednost_za_bio_oznako(soup, oznaka):
 def pridobi_bio_igralca(soup):
     return {
         "pozicija": vrednost_za_bio_oznako(soup, "Position"),
-        "drzava": vrednost_za_bio_oznako(soup, "Nationality"),
         "starost": vrednost_za_bio_oznako(soup, "Age"),
         "datum_rojstva": vrednost_za_bio_oznako(soup, "Birth date"),
         "visina_cm": vrednost_za_bio_oznako(soup, "Height"),
