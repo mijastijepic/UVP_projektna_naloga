@@ -121,7 +121,7 @@ def vrednost_za_bio_oznako(soup, oznaka):
 
 
 
-def pridobi_bio_igralca(soup):
+def pridobi_bio_igralca(soup, spol):
     slovar_pozicij = KONST.SLOVAR_POZICIJ_MOSKI if spol == "men" else KONST.SLOVAR_POZICIJ_ZENSKE
 
     return {
@@ -200,7 +200,7 @@ def pridobi_statistiko_igralca(soup):
 # funkcija, ki pridobi vse podatke enega igralca (bio + statistika skupaj)
 # -------------------------------------------------------------------
 
-def pridobi_podatke_igralca(id_igralca):
+def pridobi_podatke_igralca(id_igralca, spol):
 
     url = KONST.URL_IGRALEC.format(id_igralca=id_igralca)
     soup = pridobi_soup(url)
@@ -208,7 +208,7 @@ def pridobi_podatke_igralca(id_igralca):
         return None
  
     podatki = {}
-    podatki.update(pridobi_bio_igralca(soup))
+    podatki.update(pridobi_bio_igralca(soup, spol))
     podatki.update(pridobi_statistiko_igralca(soup))
     return podatki
 
@@ -229,7 +229,7 @@ def pridobi_vse_igralce(spol):
         seznam_igralcev = pridobi_seznam_igralcev(spol, id_ekipe)
  
         for osnovni_podatki in seznam_igralcev:
-            podrobni_podatki = pridobi_podatke_igralca(osnovni_podatki["id_igralca"])
+            podrobni_podatki = pridobi_podatke_igralca(osnovni_podatki["id_igralca"], spol)
             if podrobni_podatki is None:
                 continue  # stran igralca se ni naložila, ga preskočimo
  
