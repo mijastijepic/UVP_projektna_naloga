@@ -160,10 +160,18 @@ def pridobi_statistiko_igralca(soup):
  
     while len(nizi) < stevilo_potrebnih_nizov:
         trenutni_element = trenutni_element.find_next(string=True)
+
         if trenutni_element is None:
             break
+        
         besedilo = trenutni_element.strip()
-        if besedilo:  # preskočimo prazne nize (presledki, prelomi vrstic), ki so v pythonu obravnavani kot False
+
+        if not besedilo:  # preskočimo prazne nize (presledki, prelomi vrstic), ki so v pythonu obravnavani kot False
+            continue
+
+        if besedilo == "%" and nizi:
+            nizi[-1] += besedilo
+        else:
             nizi.append(besedilo)
  
     vrednosti = nizi[1::2]
