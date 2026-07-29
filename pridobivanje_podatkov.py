@@ -23,7 +23,7 @@ def pridobi_soup(url):
         print(f"Napaka pri nalaganju strani {url}: {napaka}")
         return None
  
-    return BeautifulSoup(odgovor.text, "html.parser")
+    return BeautifulSoup(odgovor.text, "html5lib")
 
 
 
