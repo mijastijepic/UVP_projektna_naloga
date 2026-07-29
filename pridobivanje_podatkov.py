@@ -8,7 +8,7 @@ import konstante as KONST
 
 
 # -------------------------------------------------------------------
-# POMOŽNA FUNKCIJA: prenese stran in jo pretvori v BeautifulSoup objekt
+# funkcija, ki prenese stran in jo pretvori v BeautifulSoup objekt
 # -------------------------------------------------------------------
 
 def pridobi_soup(url):
@@ -24,6 +24,17 @@ def pridobi_soup(url):
         return None
  
     return BeautifulSoup(odgovor.text, "html5lib")
+
+
+# -------------------------------------------------------------------
+# funkcija za prevajanje
+# -------------------------------------------------------------------
+
+def prevedi(izraz, slovar):
+
+    if izraz is None:
+        return None
+    return slovar.get(izraz, izraz)
 
 
 
@@ -111,8 +122,10 @@ def vrednost_za_bio_oznako(soup, oznaka):
 
 
 def pridobi_bio_igralca(soup):
+    slovar_pozicij = KONST.SLOVAR_POZICIJ_MOSKI if spol == "men" else KONST.SLOVAR_POZICIJ_ZENSKE
+
     return {
-        "pozicija": vrednost_za_bio_oznako(soup, "Position"),
+        "pozicija": prevedi(vrednost_za_bio_oznako(soup, "Position"), slovar_pozicij),
         "starost": vrednost_za_bio_oznako(soup, "Age"),
         "datum_rojstva": vrednost_za_bio_oznako(soup, "Birth date"),
         "visina_cm": vrednost_za_bio_oznako(soup, "Height"),
@@ -221,7 +234,7 @@ def pridobi_vse_igralce(spol):
                 continue  # stran igralca se ni naložila, ga preskočimo
  
             igralec = {
-                "drzava": ime_drzave,
+                "drzava": prevedi(ime_drzave, KONST.SLOVAR_DRZAV),
                 "st_dresa": osnovni_podatki["st_dresa"],
                 "priimek": osnovni_podatki["priimek"],
             }
