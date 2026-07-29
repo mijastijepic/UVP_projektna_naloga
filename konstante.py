@@ -104,10 +104,18 @@ SLOVAR_DRZAV = {
     "USA": "ZDA",
 }
  
-SLOVAR_POZICIJ = {
+SLOVAR_POZICIJ_MOSKI = {
     "Setter": "Podajalec",
-    "Outside Hitter": "Sprejemni napadalec",
-    "Middle Blocker": "Srednji bloker",
+    "Outside hitter": "Sprejemalec",
+    "Middle blocker": "Srednji bloker",
+    "Opposite spiker": "Korektor",
     "Libero": "Libero",
-    "Opposite": "Diagonalec",
+}
+ 
+SLOVAR_POZICIJ_ZENSKE = {
+    "Setter": "Podajalka",
+    "Outside hitter": "Sprejemalka",
+    "Middle blocker": "Srednja blokerka",
+    "Opposite spiker": "Korektorica",
+    "Libero": "Libero",
 }
