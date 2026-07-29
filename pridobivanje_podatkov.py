@@ -224,7 +224,7 @@ def pridobi_vse_igralce(spol):
             igralec = {
                 "drzava": ime_drzave,
                 "st_dresa": osnovni_podatki["st_dresa"],
-                "ime": osnovni_podatki["ime_na_seznamu"],
+                "priimek": osnovni_podatki["priimek"],
             }
             igralec.update(podrobni_podatki)
             vsi_igralci.append(igralec)
