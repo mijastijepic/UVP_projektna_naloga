@@ -73,3 +73,41 @@ EKIPE_ZENSKE = {
     8633: "Ukraine",
     8634: "USA",
 }
+
+
+# -----------------------------------------------------------------------
+# PREVODI DRŽAV IN POZICIJ V SLOVENŠČINO
+# -----------------------------------------------------------------------
+ 
+SLOVAR_DRZAV = {
+    "Argentina": "Argentina",
+    "Belgium": "Belgija",
+    "Brazil": "Brazilija",
+    "Bulgaria": "Bolgarija",
+    "Canada": "Kanada",
+    "China": "Kitajska",
+    "Cuba": "Kuba",
+    "Czechia": "Češka",
+    "Dominican Republic": "Dominikanska republika",
+    "France": "Francija",
+    "Germany": "Nemčija",
+    "Iran": "Iran",
+    "Italy": "Italija",
+    "Japan": "Japonska",
+    "Netherlands": "Nizozemska",
+    "Poland": "Poljska",
+    "Serbia": "Srbija",
+    "Slovenia": "Slovenija",
+    "Thailand": "Tajska",
+    "Turkiye": "Turčija",
+    "Ukraine": "Ukrajina",
+    "USA": "ZDA",
+}
+ 
+SLOVAR_POZICIJ = {
+    "Setter": "Podajalec",
+    "Outside Hitter": "Sprejemni napadalec",
+    "Middle Blocker": "Srednji bloker",
+    "Libero": "Libero",
+    "Opposite": "Diagonalec",
+}
