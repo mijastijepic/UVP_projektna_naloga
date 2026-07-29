@@ -139,7 +139,7 @@ IMENA_STATISTIK = [
     "servis_povprecje",       # Avg Points (pri servisu)
 ]
 
-# Pri povprecjih (Avg Points) je mišljeno povprečno število točk na tekmo.
+# Pri povprečjih (Avg Points) je mišljeno povprečno število točk na tekmo.
 
 
 def preveri_zacetek_statistike(besedilo):
