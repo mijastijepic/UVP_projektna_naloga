@@ -18,10 +18,10 @@ def pridobi_soup(url):
         odgovor.raise_for_status()  # sproži napako, če stran ni bila najdena (npr. 404)
 
     except requests.RequestException as napaka:
-        print(f"Napaka pri nalaganju strani {url}: {napaka}")
+        print(f'Napaka pri nalaganju strani {url}: {napaka}')
         return None
  
-    return BeautifulSoup(odgovor.text, "html5lib")
+    return BeautifulSoup(odgovor.text, 'html5lib')
 
 
 # -------------------------------------------------------------------
@@ -57,8 +57,8 @@ def pridobi_seznam_igralcev(spol, id_ekipe):
 
     # tabela z igralci je sestavljena iz vrstic <tr>, znotraj vsake pa so
     # tri celice <td>: številka dresa, priimek (s povezavo), pozicija
-    for vrstica in soup.find_all("tr"):
-        celice = vrstica.find_all("td")
+    for vrstica in soup.find_all('tr'):
+        celice = vrstica.find_all('td')
         if len(celice) != 3:
             continue  # to ni vrstica z igralcem (npr. glava tabele)
  
@@ -67,14 +67,14 @@ def pridobi_seznam_igralcev(spol, id_ekipe):
         if povezava is None or not povezava.get("href"):
             continue  # npr. trener - nima povezave na svojo stran, zato ga preskočimo
 
-        ujemanje = re.search(r"(\d+)/?$", povezava["href"])  # ID igralca je zadnje zaporedje številk v povezavi (npr. .../players/151390)
+        ujemanje = re.search(r"(\d+)/?$", povezava['href'])  # ID igralca je zadnje zaporedje številk v povezavi (npr. .../players/151390)
         if ujemanje is None:
             continue
  
         igralci.append({
-            "id_igralca": ujemanje.group(1),
-            "st_dresa": celice[0].get_text(strip=True),  # strip=True odstrani odvečne presledke, prelome vrstic,...
-            "priimek": celica_priimka.get_text(strip=True),
+            'id_igralca': ujemanje.group(1),
+            'st_dresa': celice[0].get_text(strip=True),  # strip=True odstrani odvečne presledke, prelome vrstic,...
+            'priimek': celica_priimka.get_text(strip=True),
         })
         
     return igralci
@@ -112,24 +112,24 @@ def vrednost_za_bio_oznako(soup, oznaka):
         return ujemanje_oznake(besedilo, oznaka)
 
     oznaka_div = soup.find(
-        "div",
-        class_="vbw-player-bio-head",
+        'div',
+        class_='vbw-player-bio-head',
         string=preveri_element, # najde element kjer funkcija preveri_element vrne true
     )
 
     if oznaka_div is None:
         return None
  
-    stolpec = oznaka_div.find_parent("div", class_="vbw-player-bio-col")
+    stolpec = oznaka_div.find_parent('div', class_='vbw-player-bio-col')
     if stolpec is None:
         return None
  
-    vrednosti = stolpec.find_all("div", class_="vbw-player-bio-text")
+    vrednosti = stolpec.find_all('div', class_='vbw-player-bio-text')
     if not vrednosti:
         return None
  
     for vrednost in vrednosti:
-        if "--desktop" in vrednost.get("class", []):
+        if '--desktop' in vrednost.get('class', []):
             return vrednost.get_text(strip=True)
 
     return vrednosti[0].get_text(strip=True)
@@ -137,13 +137,13 @@ def vrednost_za_bio_oznako(soup, oznaka):
 
 
 def pridobi_bio_igralca(soup, spol):
-    slovar_pozicij = KONST.SLOVAR_POZICIJ_MOSKI if spol == "men" else KONST.SLOVAR_POZICIJ_ZENSKE
+    slovar_pozicij = KONST.SLOVAR_POZICIJ_MOSKI if spol == 'men' else KONST.SLOVAR_POZICIJ_ZENSKE
 
     return {
-        "pozicija": prevedi(vrednost_za_bio_oznako(soup, "Position"), slovar_pozicij),
-        "starost": vrednost_za_bio_oznako(soup, "Age"),
-        "datum_rojstva": vrednost_za_bio_oznako(soup, "Birth date"),
-        "visina_cm": vrednost_za_bio_oznako(soup, "Height"),
+        'pozicija': prevedi(vrednost_za_bio_oznako(soup, 'Position'), slovar_pozicij),
+        'starost': vrednost_za_bio_oznako(soup, 'Age'),
+        'datum_rojstva': vrednost_za_bio_oznako(soup, 'Birth date'),
+        'visina_cm': vrednost_za_bio_oznako(soup, 'Height'),
     }
 
 
@@ -152,7 +152,7 @@ def pridobi_bio_igralca(soup, spol):
 # -------------------------------------------------------------------
 
 def preveri_zacetek_statistike(besedilo):
-    return ujemanje_oznake(besedilo, "Player Competition Statistics")
+    return ujemanje_oznake(besedilo, 'Player Competition Statistics')
  
  
 def pridobi_statistiko_igralca(soup):
@@ -176,7 +176,7 @@ def pridobi_statistiko_igralca(soup):
         if not besedilo:  # preskočimo prazne nize (presledki, prelomi vrstic), ki so v pythonu obravnavani kot False
             continue
 
-        if besedilo == "%" and nizi:  # ker je znak "%" na strani zapisan kot svoj ločen niz, ga prilepimo na prejšnjo vrednost
+        if besedilo == '%' and nizi:  # ker je znak "%" na strani zapisan kot svoj ločen niz, ga prilepimo na prejšnjo vrednost
             nizi[-1] += besedilo
         else:
             nizi.append(besedilo)
@@ -207,34 +207,43 @@ def pridobi_podatke_igralca(id_igralca, spol):
     return podatki
 
 
-
 # -------------------------------------------------------------------
 # funkcija, ki vrne seznam slovarjev s podatki vseh igralcev enega spola (vse ekipe skupaj)
 # -------------------------------------------------------------------
 
 def pridobi_vse_igralce(spol):
 
-    ekipe = KONST.EKIPE_MOSKI if spol == "men" else KONST.EKIPE_ZENSKE
+    """
+    Za izbrani spol ("men" ali "women") gre čez vse ekipe, za vsako
+    ekipo prebere seznam igralcev, nato pa za vsakega igralca prebere
+    še njegove podrobne podatke (bio + statistika).
+
+    Vrne seznam slovarjev - vsak slovar je en igralec z vsemi podatki,
+    pripravljen za shranjevanje v CSV datoteko.
+    """
+
+    ekipe = KONST.EKIPE_MOSKI if spol == 'men' else KONST.EKIPE_ZENSKE
 
     vsi_igralci = []
  
     for id_ekipe, ime_drzave in ekipe.items():
-        print(f"Berem ekipo: {ime_drzave} ...")  #izbrisi!!
+        print(f'Berem ekipo: {ime_drzave} ...')
         seznam_igralcev = pridobi_seznam_igralcev(spol, id_ekipe)
  
-        for osnovni_podatki in seznam_igralcev:
-            podrobni_podatki = pridobi_podatke_igralca(osnovni_podatki["id_igralca"], spol)
+        for en_igralec in seznam_igralcev:
+            podrobni_podatki = pridobi_podatke_igralca(en_igralec['id_igralca'], spol)
             if podrobni_podatki is None:
                 continue  # stran igralca se ni naložila, ga preskočimo
  
             igralec = {
-                "drzava": prevedi(ime_drzave, KONST.SLOVAR_DRZAV),
-                "st_dresa": osnovni_podatki["st_dresa"],
-                "priimek": osnovni_podatki["priimek"],
+                'drzava': prevedi(ime_drzave, KONST.SLOVAR_DRZAV),
+                'st_dresa': en_igralec['st_dresa'],
+                'priimek': en_igralec['priimek'],
             }
+            
             igralec.update(podrobni_podatki)
             vsi_igralci.append(igralec)
  
-            time.sleep(0.5)
+            time.sleep(0.5)  # kratek premor med zahtevami, da strani ne obremenjujemo preveč in nas strežnik ne blokira
  
     return vsi_igralci
