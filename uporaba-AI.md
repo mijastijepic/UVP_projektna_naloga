@@ -1,6 +1,6 @@
-# Izpis pogovorov z jezikovnimi modeli
+# Izpis pogovorov z AI
 
-Ta datoteka vsebuje izpise pogovorov z jezikovnimi modeli (Google Gemini, OpenAI ChatGPT in Anthropic Claude), ki so bili uporabljeni pri pripravi te projektne naloge, v skladu z navodili profesorja o uporabi umetne inteligence.
+Ta datoteka vsebuje izpise pogovorov z jezikovnimi modeli (Google Gemini, ChatGPT in Claude), ki so bili uporabljeni pri pripravi te projektne naloge.
 
 ---
 
