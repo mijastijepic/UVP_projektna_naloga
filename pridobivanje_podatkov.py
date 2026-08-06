@@ -44,7 +44,7 @@ def pridobi_seznam_igralcev(spol, id_ekipe):
     """
     Za izbrano ekipo (spol = "men" ali "women", id_ekipe = številka ekipe iz
     konstante.py) prebere stran s seznamom igralcev in vrne seznam slovarjev
-    z osnovnimi podatki o vsakem igralcu (ID, št. dresa, priimek, pozicija).
+    z osnovnimi podatki o vsakem igralcu (ID, št. dresa, priimek).
     """
 
     url = KONST.URL_IGRALCI_EKIPE.format(spol=spol, id_ekipe=id_ekipe)
@@ -55,7 +55,7 @@ def pridobi_seznam_igralcev(spol, id_ekipe):
  
     igralci = []
 
-    # Tabela z igralci je sestavljena iz vrstic <tr>, znotraj vsake pa so
+    # tabela z igralci je sestavljena iz vrstic <tr>, znotraj vsake pa so
     # tri celice <td>: številka dresa, priimek (s povezavo), pozicija
     for vrstica in soup.find_all("tr"):
         celice = vrstica.find_all("td")
@@ -81,7 +81,7 @@ def pridobi_seznam_igralcev(spol, id_ekipe):
 
 
 # -------------------------------------------------------------------
-# funkcija, ki zbere osebne podatke igralca
+# funkcija, ki zbere osebne podatke igralca (igralčev bio)
 # -------------------------------------------------------------------
 
 def ujemanje_oznake(besedilo, iskana_oznaka):
@@ -90,7 +90,21 @@ def ujemanje_oznake(besedilo, iskana_oznaka):
         return False
     return besedilo.strip() == iskana_oznaka
 
+    """
+    Funkcija vrednost_za_bio_oznako poišče vrednost v razdelku "Player Bio"
+    glede na bio oznako (npr. "Age" ali "Position").
 
+    HTML na strani je zgrajen tako, da ima vsak podatek svoj "stolpec" -
+    v njem ima najprej oznako (npr. "Age"), nato pa isto vrednost dvakrat
+    (enkrat polno "--desktop" za računalnik, enkrat skrajšano "--mobile"
+    za telefon). Primer:
+
+        <div class=vbw-player-bio-col>
+            <div class=vbw-player-bio-head>Position</div>
+            <div class="vbw-player-bio-text --desktop">Setter</div>
+            <div class="vbw-player-bio-text --mobile">S</div>
+        </div>
+    """
 
 def vrednost_za_bio_oznako(soup, oznaka):
 
@@ -131,7 +145,6 @@ def pridobi_bio_igralca(soup, spol):
         "datum_rojstva": vrednost_za_bio_oznako(soup, "Birth date"),
         "visina_cm": vrednost_za_bio_oznako(soup, "Height"),
     }
-
 
 
 # -------------------------------------------------------------------
