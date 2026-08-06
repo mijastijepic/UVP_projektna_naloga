@@ -30,4 +30,4 @@ Zbrane podatke sem nato uvozila v zvezek `analiza_podatkov.ipynb`, kjer sem jih 
 
 ## Navodila za zagon
 
-Če bi želeli program pognati sami, je dovolj da zaženete datoteko `main.py`. Ta samodejno ustvari datoteki `igralci_moski.csv` in `igralci_zenske.csv`, ki sta potrebni za nadaljno analizo. Nato odprete datoteko `analiza_podatkov.ipynb` izvedete analizo.
+Če bi želeli program pognati sami, je dovolj da zaženete datoteko `main.py`. Ta samodejno ustvari datoteki `igralci_moski.csv` in `igralci_zenske.csv`, ki sta potrebni za nadaljno analizo. Nato odprete datoteko `analiza_podatkov.ipynb` in izvedete analizo.
