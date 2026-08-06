@@ -122,7 +122,7 @@ SLOVAR_POZICIJ_ZENSKE = {
 
 
 # -----------------------------------------------------------------------
-# IMENA ZA STATISTIKO IGRALCA
+# SEZNAM IMEN ZA STATISTIKO IGRALCA
 # -----------------------------------------------------------------------
 
 IMENA_STATISTIK = [
