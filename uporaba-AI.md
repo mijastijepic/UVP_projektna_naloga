@@ -438,7 +438,7 @@ plt.show()
 
 > Osredotočimo se zdaj še na slovensko reprezentanco. Zanima me, kdo je najboljši igralec slovenske reprezentance na tem VNL-ju - s tem mislim na najbolj vsestranskega igralca, torej tistega, ki je bil najboljši v največ statističnih elementih. naredi tako tabelo, ki za vsako statistiko izpiše najboljšega slovenca
 
-**Odgovor (izsek):**
+**Odgovor:**
 
 Za to potrebujemo nov ukaz — `.idxmax()` — ki pove **kje** (pri katerem igralcu) je največja vrednost, ne le kakšna je ta vrednost.
 
