@@ -148,7 +148,7 @@ def pridobi_bio_igralca(soup, spol):
 
 
 # -------------------------------------------------------------------
-# funkcija, ki pridobi igralčevo statistiko
+# funkcija, ki pridobi igralčevo statistiko iz razdelka "Player Competition Statistics".
 # -------------------------------------------------------------------
 
 def preveri_zacetek_statistike(besedilo):
@@ -156,14 +156,12 @@ def preveri_zacetek_statistike(besedilo):
  
  
 def pridobi_statistiko_igralca(soup):
-    
-    # Iz strani igralca prebere statistiko iz razdelka "Player Competition Statistics".
 
-    zacetna_oznaka = soup.find(string=preveri_zacetek_statistike)
+    zacetna_oznaka = soup.find(string=preveri_zacetek_statistike)  # poiščemo naslov razdelka - če ga ni, igralec še ni odigral tekme
     if zacetna_oznaka is None:
-        return {ime: None for ime in IMENA_STATISTIK}
+        return {ime: None for ime in KONST.IMENA_STATISTIK} 
  
-    stevilo_potrebnih_nizov = len(IMENA_STATISTIK) * 2
+    stevilo_potrebnih_nizov = len(KONST.IMENA_STATISTIK) * 2
     nizi = []
     trenutni_element = zacetna_oznaka
  
@@ -178,7 +176,7 @@ def pridobi_statistiko_igralca(soup):
         if not besedilo:  # preskočimo prazne nize (presledki, prelomi vrstic), ki so v pythonu obravnavani kot False
             continue
 
-        if besedilo == "%" and nizi:
+        if besedilo == "%" and nizi:  # ker je znak "%" na strani zapisan kot svoj ločen niz, ga prilepimo na prejšnjo vrednost
             nizi[-1] += besedilo
         else:
             nizi.append(besedilo)
@@ -186,11 +184,10 @@ def pridobi_statistiko_igralca(soup):
     vrednosti = nizi[1::2]
  
     statistika = {}
-    for ime_polja, vrednost in zip(IMENA_STATISTIK, vrednosti):
-        statistika[ime_polja] = vrednost
+    for ime_statistike, vrednost in zip(KONST.IMENA_STATISTIK, vrednosti):
+        statistika[ime_statistike] = vrednost
  
     return statistika
-
 
 
 # -------------------------------------------------------------------
