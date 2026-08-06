@@ -42,7 +42,7 @@ def main():
     print('\nKonec. Podatki so shranjeni.')
 
 
-# Naslednja funkcija poskrbi, da se main() požene SAMO, če je ta datoteka pognananeposredno
+# Naslednja funkcija poskrbi, da se main() požene SAMO, če je ta datoteka pognana
 # neposredno (python main.py), ne pa tudi, če bi jo kdo uvozil v drugo datoteko.
 if __name__ == '__main__':  
     main()
