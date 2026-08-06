@@ -119,3 +119,24 @@ SLOVAR_POZICIJ_ZENSKE = {
     "Opposite spiker": "Korektorica",
     "Libero": "Libero",
 }
+
+
+# -----------------------------------------------------------------------
+# IMENA ZA STATISTIKO IGRALCA
+# -----------------------------------------------------------------------
+
+IMENA_STATISTIK = [
+    "tocke_skupaj",           # Total Points
+    "tocke_povprecje",        # Average by Match
+    "tocke_napad",            # Attack Points
+    "ucinkovitost_napad",     # Efficiency (%)
+    "napad_povprecje",        # Avg Points (pri napadu)
+    "tocke_blok",             # Block Points
+    "uspesnost_blok",         # Success (%)
+    "blok_povprecje",         # Avg Points (pri bloku)
+    "tocke_servis",           # Serve Points
+    "uspesnost_servis",       # Success (%)
+    "servis_povprecje",       # Avg Points (pri servisu)
+]
+
+# Pri povprečjih (Avg Points) je mišljeno povprečno število točk na tekmo.

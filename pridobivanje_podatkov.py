@@ -151,23 +151,6 @@ def pridobi_bio_igralca(soup, spol):
 # funkcija, ki pridobi igralčevo statistiko
 # -------------------------------------------------------------------
 
-IMENA_STATISTIK = [
-    "tocke_skupaj",           # Total Points
-    "tocke_povprecje",        # Average by Match
-    "tocke_napad",            # Attack Points
-    "ucinkovitost_napad",     # Efficiency (%)
-    "napad_povprecje",        # Avg Points (pri napadu)
-    "tocke_blok",             # Block Points
-    "uspesnost_blok",         # Success (%)
-    "blok_povprecje",         # Avg Points (pri bloku)
-    "tocke_servis",           # Serve Points
-    "uspesnost_servis",       # Success (%)
-    "servis_povprecje",       # Avg Points (pri servisu)
-]
-
-# Pri povprečjih (Avg Points) je mišljeno povprečno število točk na tekmo.
-
-
 def preveri_zacetek_statistike(besedilo):
     return ujemanje_oznake(besedilo, "Player Competition Statistics")
  
