@@ -433,6 +433,7 @@ plt.xticks(rotation=45, ha="right")
 plt.tight_layout()
 plt.show()
 ```
+---
 
 ### Vprašanje 2
 
@@ -452,11 +453,40 @@ stolpci_za_analizo = {
     "tocke_napad": "Točke iz napada",
     "ucinkovitost_napad": "Učinkovitost napada (%)",
     "tocke_blok": "Točke iz bloka",
-    # ... (nadaljevanje ni bilo zajeto na posnetku zaslona)
+    "uspesnost_blok": "Uspešnost bloka (%)",
+    "tocke_servis": "Točke iz servisa",
+    "uspesnost_servis": "Uspešnost servisa (%)",
 }
+
+najboljsi_po_kategorijah = []
+
+for stolpec, ime_kategorije in stolpci_za_analizo.items():
+    # dropna - izločimo igralce, ki nimajo podatka za to kategorijo (niso igrali)
+    podatki = slovenija_moski.dropna(subset=[stolpec])
+    if podatki.empty:
+        continue
+
+    # idxmax() vrne INDEKS vrstice z največjo vrednostjo (ne same vrednosti!)
+    indeks_najboljsega = podatki[stolpec].idxmax()
+    # .loc[indeks] vzame CELO vrstico na tem indeksu (vse podatke tega igralca)
+    vrstica_najboljsega = podatki.loc[indeks_najboljsega]
+
+    najboljsi_po_kategorijah.append({
+        "Kategorija": ime_kategorije,
+        "Najboljši Slovenec": vrstica_najboljsega["priimek"],
+        "Vrednost": vrstica_najboljsega[stolpec],
+    })
+
+# Seznam slovarjev pretvorimo v pravi DataFrame
+najboljsi_tabela = pd.DataFrame(najboljsi_po_kategorijah)
+najboljsi_tabela.index += 1
+najboljsi_tabela
 ```
 
----
+**Razlaga ključnih novosti:**
+- `.idxmax()` — če bi uporabila samo `.max()`, bi dobila **vrednost** (npr. `185`), ne pa **kdo** jo je dosegel. `.idxmax()` namesto tega vrne **indeks** (vrstico) tistega igralca, ki ima to najvišjo vrednost — potem lahko z `.loc[...]` pogledaš **vse** njegove podatke.
+- `.dropna(subset=[stolpec])` — izloči igralce, ki za **ta konkreten** stolpec nimajo podatka (`NaN`) — brez tega bi `.idxmax()` lahko vrgel napako ali vrnil nesmiselni rezultat, če bi bili vsi manjkajoči.
+- `najboljsi_po_kategorijah = []` + `.append({...})` v zanki — namesto da bi takoj gradila DataFrame, najprej zberemo **seznam slovarjev** (en slovar na kategorijo), in šele na koncu vse **skupaj** pretvorimo v tabelo s `pd.DataFrame(seznam_slovarjev)` — priročen vzorec, kadar tabelo "sestavljaš" postopoma, vrstico za vrstico.
 
 
 *Ta file je bil pripravljen s pomočjo programa Claude - vanj sem naložila posnetke zaslonov vseh pogovorov, ki so mi pomagali pri pripravi projektne naloge.*
