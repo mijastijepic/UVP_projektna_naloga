@@ -8,12 +8,10 @@ import konstante as KONST
 
 
 # -------------------------------------------------------------------
-# funkcija, ki prenese stran in jo pretvori v BeautifulSoup objekt
+# funkcija, ki prenese spletno stran in jo pretvori v BeautifulSoup objekt
 # -------------------------------------------------------------------
 
 def pridobi_soup(url):
-
-    # Obišče podano spletno stran in vrne njeno vsebino kot BeautifulSoup objekt, po katerem lahko nato iščemo podatke.
 
     try:
         odgovor = requests.get(url, headers=KONST.GLAVE, timeout=10)
@@ -34,8 +32,7 @@ def prevedi(izraz, slovar):
 
     if izraz is None:
         return None
-    return slovar.get(izraz, izraz)
-
+    return slovar.get(izraz, izraz)  # če izraza ni v slovarju vrne kar nespremenjen izraz
 
 
 # -------------------------------------------------------------------
@@ -44,6 +41,12 @@ def prevedi(izraz, slovar):
 
 def pridobi_seznam_igralcev(spol, id_ekipe):
 
+    """
+    Za izbrano ekipo (spol = "men" ali "women", id_ekipe = številka ekipe iz
+    konstante.py) prebere stran s seznamom igralcev in vrne seznam slovarjev
+    z osnovnimi podatki o vsakem igralcu (ID, št. dresa, priimek, pozicija).
+    """
+
     url = KONST.URL_IGRALCI_EKIPE.format(spol=spol, id_ekipe=id_ekipe)
 
     soup = pridobi_soup(url)
@@ -51,32 +54,30 @@ def pridobi_seznam_igralcev(spol, id_ekipe):
         return []
  
     igralci = []
- 
+
+    # Tabela z igralci je sestavljena iz vrstic <tr>, znotraj vsake pa so
+    # tri celice <td>: številka dresa, priimek (s povezavo), pozicija
     for vrstica in soup.find_all("tr"):
         celice = vrstica.find_all("td")
         if len(celice) != 3:
             continue  # to ni vrstica z igralcem (npr. glava tabele)
  
-        celica_imena = celice[1]
-        povezava = celica_imena.find("a")
+        celica_priimka = celice[1]
+        povezava = celica_priimka.find("a")
         if povezava is None or not povezava.get("href"):
             continue  # npr. trener - nima povezave na svojo stran, zato ga preskočimo
- 
-        ujemanje = re.search(r"(\d+)/?$", povezava["href"])
+
+        ujemanje = re.search(r"(\d+)/?$", povezava["href"])  # ID igralca je zadnje zaporedje številk v povezavi (npr. .../players/151390)
         if ujemanje is None:
             continue
  
         igralci.append({
             "id_igralca": ujemanje.group(1),
-            "st_dresa": celice[0].get_text(strip=True),
-            "priimek": celica_imena.get_text(strip=True),
-            "pozicija_kratica": celice[2].get_text(strip=True),
+            "st_dresa": celice[0].get_text(strip=True),  # strip=True odstrani odvečne presledke, prelome vrstic,...
+            "priimek": celica_priimka.get_text(strip=True),
         })
         
- 
     return igralci
-
-
 
 
 # -------------------------------------------------------------------
