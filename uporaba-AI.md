@@ -408,7 +408,7 @@ Opaziš, da se besede zlepijo skupaj.
 
 ### Vprašanje 1
 
-> kako bi naredila stolpični graf, kjer bi se poleg skupnega stevila tock videla se porazdelitev tock (torej koliko tock jeigralec dobil z napadom, blokom ali servisom)?
+> kako bi naredila stolpični graf, kjer bi se poleg skupnega stevila tock videla se porazdelitev tock (torej koliko tock je igralec dobil z napadom, blokom ali servisom)? za podatke uporabi priloženo csv tabelo
 
 **Odgovor (izsek):**
 
