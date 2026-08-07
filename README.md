@@ -1,6 +1,6 @@
 # UVP_projektna_naloga
 
-Za projektno nalogo sem se odločila iz interneta pridobiti podatke in statistiko igralcev letošnjega odbojkarskega turnirja Volleyball Nations League - VNL 2026. Projektna avtomatsko pridobi podatke o igralcih in igralkah (tako moški kot ženske) s spletne strani https://en.volleyballworld.com/volleyball/competitions/volleyball-nations-league/, za vsakega igralca zbere osebne podatke (starost, višina, pozicija,...) in njegovo statistiko (točke iz napada, bloka, servisa,...). Podatki se shranijo v dve CSV datoteki, ki omogočata nadaljnjo analizo.
+Za projektno nalogo sem se odločila z interneta pridobiti podatke in statistiko igralcev letošnjega odbojkarskega turnirja Volleyball Nations League - VNL 2026. Projektna naloga avtomatsko pridobi podatke o igralcih in igralkah (tako moški kot ženske) s spletne strani https://en.volleyballworld.com/volleyball/competitions/volleyball-nations-league/, za vsakega igralca zbere osebne podatke (starost, višina, pozicija,...) in njegovo statistiko (točke iz napada, bloka, servisa,...). Podatki se shranijo v dve CSV datoteki, ki omogočata nadaljnjo analizo.
 
 ## Struktura projekta
 
