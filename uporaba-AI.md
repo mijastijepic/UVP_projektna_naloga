@@ -242,9 +242,9 @@ Stavek `if __name__ == "__main__":` je v Pythonu standardna dobra praksa (best p
 
 **Odgovor:**
 
-Evo izboljšane in čiste kode, prilagojene točno tvoji logiki, ki lepo nariše te podatke!
+Evo koda, prilagojena točno tvoji logiki, ki lepo nariše te podatke!
 
-Za večje diamantne točke na koncu izračunamo povprečje iz celotne tabele `igralci` (torej vseh igralcev in igralk), točke za posamezne države pa vzamemo iz tabele `primerjava_starosti`.
+Za večje točke na koncu izračunamo povprečje iz celotne tabele `igralci` (torej vseh igralcev in igralk), točke za posamezne države pa vzamemo iz tabele `primerjava_starosti`.
 
 **Koda za Jupyter Notebook:**
 
