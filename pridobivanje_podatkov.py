@@ -32,7 +32,7 @@ def prevedi(izraz, slovar):
 
     if izraz is None:
         return None
-    return slovar.get(izraz, izraz)  # če izraza ni v slovarju vrne kar nespremenjen izraz
+    return slovar.get(izraz, izraz)  # če izraza ni v slovarju vrne kar originalen izraz
 
 
 # -------------------------------------------------------------------
@@ -240,7 +240,7 @@ def pridobi_vse_igralce(spol):
                 'st_dresa': en_igralec['st_dresa'],
                 'priimek': en_igralec['priimek'],
             }
-            
+
             igralec.update(podrobni_podatki)
             vsi_igralci.append(igralec)
  
