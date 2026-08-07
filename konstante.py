@@ -11,7 +11,6 @@ GLAVE = {
 }
 
 
-
 # -----------------------------------------------------------------------
 # OSNOVNI NASLOVI (URL-ji) STRANI VOLLEYBALLWORLD.COM
 # -----------------------------------------------------------------------
@@ -25,7 +24,6 @@ URL_IGRALEC = (
     "https://en.volleyballworld.com/volleyball/competitions/"
     "volleyball-nations-league/players/{id_igralca}"
 )
-
 
 
 # -----------------------------------------------------------------------
